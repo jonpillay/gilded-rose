@@ -57,5 +57,3 @@ describe("Gilded Rose, tests that cover original functionality of the program", 
     expect(items[0].quality).toBe(10);
   });
 });
-
-'Backstage passes to a TAFKAL80ETC concert'
