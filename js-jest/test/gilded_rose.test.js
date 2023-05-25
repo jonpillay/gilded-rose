@@ -1,4 +1,4 @@
-const {Shop, Item} = require("../src/gilded_rose");
+const {Shop, Item, ConjuredItem} = require("../src/gilded_rose");
 
 describe("Gilded Rose, tests that cover original functionality of the program", function() {
   it("should initialise a shop and item and return the name 'foo'", function() {
@@ -64,14 +64,45 @@ describe('Gilded Rose, tests for coverage that occured whilst refactoring', func
     const items = gildedRose.updateQuality();
     expect(items[0].sellIn).toBe(0);
   })
-  it("should initialise an 'Backstage passes to a TAFKAL80ETC concert' item by 3, but stop at the quality ceiling of 50", function() {
+  it("should initialise an 'Backstage passes to a TAFKAL80ETC concert' item and increase quality by 3, but stop at the quality ceiling of 50", function() {
     const gildedRose = new Shop([new Item("Backstage passes to a TAFKAL80ETC concert", 2, 49)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(50);
   });
-  it("should initialise an 'Backstage passes to a TAFKAL80ETC concert' item by 3, but stop at the quality ceiling of 50", function() {
+  it("should initialise an 'Backstage passes to a TAFKAL80ETC concert' item and increase quality by 2, but stop at the quality ceiling of 50", function() {
     const gildedRose = new Shop([new Item("Backstage passes to a TAFKAL80ETC concert", 6, 49)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(50);
   });
+  it("should initialise an 'Backstage passes to a TAFKAL80ETC concert' item and increase correctly over three updateQuality calls (with differing values)", function() {
+    const gildedRose = new Shop([new Item("Backstage passes to a TAFKAL80ETC concert", 11, 30)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).toBe(31);
+    const items2 = gildedRose.updateQuality();
+    expect(items2[0].quality).toBe(33);
+    const items3 = gildedRose.updateQuality();
+    expect(items3[0].quality).toBe(35);
+    const items4 = gildedRose.updateQuality();
+    expect(items4[0].quality).toBe(37);
+    const items5 = gildedRose.updateQuality();
+    expect(items5[0].quality).toBe(39);
+    const items6 = gildedRose.updateQuality();
+    expect(items6[0].quality).toBe(41);
+    // sellIn should now be 5 - quality should increase by 3
+    const items7 = gildedRose.updateQuality();
+    expect(items7[0].quality).toBe(44);
+  });
+})
+
+describe("Gilded Rose, tests for the addition of the ConjuredItem class", function() {
+  it("should reduce 2 quality points for a ConjuredItem who hasn't passed its sellIn date", function() {
+    const gildedRose = new Shop([new ConjuredItem("Book", 10, 20)])
+    const items = gildedRose.updateQuality()
+    expect(items[0].quality).toBe(18)
+  })
+  it("should resuce 4 quality points for a ConjuredItem who has passed its sellIn date", function() {
+    const gildedRose = new Shop([new ConjuredItem("Book", -1, 20)])
+    const items = gildedRose.updateQuality()
+    expect(items[0].quality).toBe(16)
+  })
 })
