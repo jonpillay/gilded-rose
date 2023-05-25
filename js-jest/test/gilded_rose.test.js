@@ -64,4 +64,14 @@ describe('Gilded Rose, tests for coverage that occured whilst refactoring', func
     const items = gildedRose.updateQuality();
     expect(items[0].sellIn).toBe(0);
   })
+  it("should initialise an 'Backstage passes to a TAFKAL80ETC concert' item by 3, but stop at the quality ceiling of 50", function() {
+    const gildedRose = new Shop([new Item("Backstage passes to a TAFKAL80ETC concert", 2, 49)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).toBe(50);
+  });
+  it("should initialise an 'Backstage passes to a TAFKAL80ETC concert' item by 3, but stop at the quality ceiling of 50", function() {
+    const gildedRose = new Shop([new Item("Backstage passes to a TAFKAL80ETC concert", 6, 49)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).toBe(50);
+  });
 })
