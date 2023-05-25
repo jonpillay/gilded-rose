@@ -57,3 +57,11 @@ describe("Gilded Rose, tests that cover original functionality of the program", 
     expect(items[0].quality).toBe(10);
   });
 });
+
+describe('Gilded Rose, tests for coverage that occured whilst refactoring', function() {
+  it('Should not decrease the sellIn value on Sulfras when it is 0 or less', function() {
+    const gildedRose = new Shop([new Item("Sulfuras, Hand of Ragnaros", 0, 10)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].sellIn).toBe(0);
+  })
+})
