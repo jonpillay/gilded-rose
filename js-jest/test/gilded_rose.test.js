@@ -51,6 +51,11 @@ describe("Gilded Rose, tests that cover original functionality of the program", 
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(0);
   });
+  it("should initialise an 'Sulfuras, Hand of Ragnaros' item and not decrease the quality at all (10)", function() {
+    const gildedRose = new Shop([new Item("Sulfuras, Hand of Ragnaros", 10, 10)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].quality).toBe(10);
+  });
 });
 
 'Backstage passes to a TAFKAL80ETC concert'
