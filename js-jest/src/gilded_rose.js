@@ -7,7 +7,7 @@ class Item {
 }
 
 class ConjuredItem extends Item {
-  constructor(name, sellIn, quality) {
+  constructor(name, sellIn, quality){
     super(name, sellIn, quality);
     this.conjured = true;
   }
