@@ -7,56 +7,52 @@ class Item {
 }
 
 class ConjuredItem extends Item {
-  constructor(name, sellIn, quality){
-    super(name, sellIn, quality);
-    this.conjured = true;
   }
-}
 
 class Shop {
   constructor(items=[]){
     this.items = items;
   }
   updateQuality() {
-    for (let i = 0; i < this.items.length; i++) {
-      if (this.items[i].name == 'Sulfuras, Hand of Ragnaros') {
-          continue
-      } else if (this.items[i].name == 'Aged Brie') {
-        if (this.items[i].quality < 50) {
-          this.items[i].quality += 1
-      }} else if (this.items[i].name == 'Backstage passes to a TAFKAL80ETC concert') {
-        if (this.items[i].sellIn <= 0) {
-          this.items[i].quality = 0
-        } else if (5 < this.items[i].sellIn && this.items[i].sellIn <= 10) {
-          if (this.items[i].quality < 48) {
-            this.items[i].quality += 2;
+    this.items.forEach(item => {
+      if (item.name == 'Sulfuras, Hand of Ragnaros') {
+          return;
+      } else if (item.name == 'Aged Brie') {
+        if (item.quality < 50) {
+          item.quality += 1
+      }} else if (item.name == 'Backstage passes to a TAFKAL80ETC concert') {
+        if (item.sellIn <= 0) {
+          item.quality = 0
+        } else if (5 < item.sellIn && item.sellIn <= 10) {
+          if (item.quality < 48) {
+            item.quality += 2;
           } else {
-            this.items[i].quality = 50
+            item.quality = 50
           }
-        } else if (this.items[i].sellIn <= 5) {
-          if (this.items[i].quality < 47) {
-            this.items[i].quality += 3;
+        } else if (item.sellIn <= 5) {
+          if (item.quality < 47) {
+            item.quality += 3;
           } else {
-            this.items[i].quality = 50
+            item.quality = 50
           }
         } else {
-          this.items[i].quality += 1;
+          item.quality += 1;
       }} else {
-        if (this.items[i].quality > 0) {
-          this.items[i].quality -= 1;
-          if (this.items[i].conjured == true) {
-            this.items[i].quality -= 1;
+        if (item.quality > 0) {
+          item.quality -= 1;
+          if (item instanceof ConjuredItem && item.quality > 0) {
+            item.quality -= 1;
           }
         }
-        if (this.items[i].sellIn < 0 && this.items[i].quality > 0) {
-          this.items[i].quality -= 1
-          if (this.items[i].conjured == true) {
-            this.items[i].quality -= 1;
+        if (item.sellIn < 0 && item.quality > 0) {
+          item.quality -= 1
+          if (item instanceof ConjuredItem && item.quality > 0) {
+            item.quality -= 1;
           }
         }
       }
-      this.items[i].sellIn -= 1
-    }
+      item.sellIn -= 1
+    })
     return this.items;
   }
 }
